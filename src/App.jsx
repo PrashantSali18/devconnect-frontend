@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authAPI } from './utils/api.js';
 import { setUser, selectIsAuthenticated, selectAuthToken } from './redux/slices/authSlice.js';
-import useSocket from './hooks/useScoket.js';
+// import useSocket from './hooks/useScoket.js';
 
 // Layout
 import Layout from './components/layout/Layout.jsx';
@@ -34,7 +34,7 @@ function App() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const token = useSelector(selectAuthToken);
   
-  useSocket();
+  // useSocket();
 
   useEffect(() => {
     const fetchUser = async () => {
