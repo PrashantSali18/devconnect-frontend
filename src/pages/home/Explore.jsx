@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
-import PostCard from '../../components/posts/PostCard';
-import { postAPI } from '../../utils/api';
-import { setPosts, setLoading } from '../../redux/slices/postSlice';
-
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import PostCard from "../../components/posts/PostCard";
+import { postAPI } from "../../utils/api";
+import { setPosts, setLoading } from "../../redux/slices/postSlice";
 
 const Explore = () => {
   const dispatch = useDispatch();
@@ -24,7 +23,7 @@ const Explore = () => {
       dispatch(setPosts(data.posts));
       setHasMore(data.currentPage < data.totalPages);
     } catch (error) {
-      toast.error('Failed to load posts');
+      toast.error("Failed to load posts");
     }
   };
 
@@ -39,7 +38,7 @@ const Explore = () => {
       setPage(nextPage);
       setHasMore(data.currentPage < data.totalPages);
     } catch (error) {
-      toast.error('Failed to load more posts');
+      toast.error("Failed to load more posts");
     } finally {
       setLoadingMore(false);
     }
@@ -49,7 +48,10 @@ const Explore = () => {
     return (
       <div className="home-container">
         <div className="loading-container">
-          <div className="spinner" style={{ width: '40px', height: '40px' }}></div>
+          <div
+            className="spinner"
+            style={{ width: "40px", height: "40px" }}
+          ></div>
         </div>
       </div>
     );
@@ -75,12 +77,12 @@ const Explore = () => {
 
             {hasMore && (
               <div className="load-more-container">
-                <button 
+                <button
                   className="btn btn-outline"
                   onClick={loadMore}
                   disabled={loadingMore}
                 >
-                  {loadingMore ? 'Loading...' : 'Load More'}
+                  {loadingMore ? "Loading..." : "Load More"}
                 </button>
               </div>
             )}

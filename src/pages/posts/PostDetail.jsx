@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { FaArrowLeft } from 'react-icons/fa';
-import { postAPI } from '../../utils/api';
-import PostCard from '../../components/posts/PostCard';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { FaArrowLeft } from "react-icons/fa";
+import { postAPI } from "../../utils/api";
+import PostCard from "../../components/posts/PostCard";
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -20,8 +20,8 @@ const PostDetail = () => {
       const { data } = await postAPI.getPost(postId);
       setPost(data);
     } catch (error) {
-      toast.error('Post not found');
-      navigate('/');
+      toast.error("Post not found");
+      navigate("/");
     } finally {
       setLoading(false);
     }

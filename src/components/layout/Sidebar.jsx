@@ -1,15 +1,21 @@
-import { NavLink } from 'react-router-dom';
-import { HomeIcon, MapIcon, BellIcon, UserIcon } from '@heroicons/react/24/outline';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import {
+  HomeIcon,
+  MapIcon,
+  BellIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
 
   const navItems = [
-    { path: '/', icon: HomeIcon, label: 'Home' },
-    { path: '/explore', icon: MapIcon, label: 'Explore' },
-    { path: '/notifications', icon: BellIcon, label: 'Notifications' },
-    { path: `/profile/${user?._id}`, icon: UserIcon, label: 'Profile' },
+    { path: "/", icon: HomeIcon, label: "Home" },
+    { path: "/explore", icon: MapIcon, label: "Explore" },
+    { path: "/notifications", icon: BellIcon, label: "Notifications" },
+    { path: `/profile/${user?._id}`, icon: UserIcon, label: "Profile" },
   ];
 
   return (
@@ -22,8 +28,8 @@ const Sidebar = () => {
             className={({ isActive }) =>
               `flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 transition-all ${
                 isActive
-                  ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-600'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  ? "bg-primary-50 text-primary-700 border-l-4 border-primary-600"
+                  : "text-gray-700 hover:bg-gray-100"
               }`
             }
           >

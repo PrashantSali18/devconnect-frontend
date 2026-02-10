@@ -1,14 +1,20 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { formatDistanceToNow } from 'date-fns';
-import toast from 'react-hot-toast';
-import { notificationAPI } from '../../utils/api';
-import { setNotifications, markAsRead, markAllAsRead } from '../../redux/slices/notificationSlice';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns";
+import toast from "react-hot-toast";
+import { notificationAPI } from "../../utils/api";
+import {
+  setNotifications,
+  markAsRead,
+  markAllAsRead,
+} from "../../redux/slices/notificationSlice";
 
 const Notifications = () => {
   const dispatch = useDispatch();
-  const { notifications, loading } = useSelector((state) => state.notifications);
+  const { notifications, loading } = useSelector(
+    (state) => state.notifications,
+  );
 
   useEffect(() => {
     fetchNotifications();
@@ -19,7 +25,7 @@ const Notifications = () => {
       const { data } = await notificationAPI.getNotifications();
       dispatch(setNotifications(data.notifications));
     } catch (error) {
-      toast.error('Failed to load notifications');
+      toast.error("Failed to load notifications");
     }
   };
 
@@ -36,9 +42,9 @@ const Notifications = () => {
     try {
       await notificationAPI.markAllAsRead();
       dispatch(markAllAsRead());
-      toast.success('All marked as read');
+      toast.success("All marked as read");
     } catch (error) {
-      toast.error('Failed to mark all as read');
+      toast.error("Failed to mark all as read");
     }
   };
 
@@ -47,7 +53,12 @@ const Notifications = () => {
       <div className="notifications-header">
         <h1>Notifications</h1>
         {notifications.length > 0 && (
-          <button className="btn btn-secondary btn-sm" onClick={handleMarkAllAsRead}>Mark all as read</button>
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={handleMarkAllAsRead}
+          >
+            Mark all as read
+          </button>
         )}
       </div>
 
@@ -58,15 +69,21 @@ const Notifications = () => {
           notifications.map((notif) => (
             <Link
               key={notif._id}
-              to={notif.link || '#'}
-              className={`notification-item ${!notif.isRead ? 'notification-unread' : ''}`}
+              to={notif.link || "#"}
+              className={`notification-item ${!notif.isRead ? "notification-unread" : ""}`}
               onClick={() => !notif.isRead && handleMarkAsRead(notif._id)}
             >
-              <img src={notif.sender?.profilePicture} alt={notif.sender?.name} className="avatar avatar-sm" />
+              <img
+                src={notif.sender?.profilePicture}
+                alt={notif.sender?.name}
+                className="avatar avatar-sm"
+              />
               <div className="notification-content">
                 <p>{notif.message}</p>
                 <span className="notification-time">
-                  {formatDistanceToNow(new Date(notif.createdAt), { addSuffix: true })}
+                  {formatDistanceToNow(new Date(notif.createdAt), {
+                    addSuffix: true,
+                  })}
                 </span>
               </div>
               {!notif.isRead && <div className="notification-dot"></div>}

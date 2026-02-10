@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { FaSearch } from 'react-icons/fa';
-import { userAPI, postAPI } from '../../utils/api';
-import UserCard from '../../components/common/UserCard';
-import PostCard from '../../components/posts/PostCard';
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { FaSearch } from "react-icons/fa";
+import { userAPI, postAPI } from "../../utils/api";
+import UserCard from "../../components/common/UserCard";
+import PostCard from "../../components/posts/PostCard";
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
-  const [activeTab, setActiveTab] = useState('users');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+  const [activeTab, setActiveTab] = useState("users");
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const query = searchParams.get('q');
+    const query = searchParams.get("q");
     if (query) {
       setSearchQuery(query);
       handleSearch(query);
@@ -35,7 +35,7 @@ const Search = () => {
       setUsers(usersRes.data);
       setPosts(postsRes.data);
     } catch (error) {
-      toast.error('Search failed');
+      toast.error("Search failed");
     } finally {
       setLoading(false);
     }
@@ -61,19 +61,21 @@ const Search = () => {
             className="input search-input"
           />
         </div>
-        <button type="submit" className="btn btn-primary">Search</button>
+        <button type="submit" className="btn btn-primary">
+          Search
+        </button>
       </form>
 
       <div className="search-tabs">
         <button
-          className={`search-tab ${activeTab === 'users' ? 'search-tab-active' : ''}`}
-          onClick={() => setActiveTab('users')}
+          className={`search-tab ${activeTab === "users" ? "search-tab-active" : ""}`}
+          onClick={() => setActiveTab("users")}
         >
           Users ({users.length})
         </button>
         <button
-          className={`search-tab ${activeTab === 'posts' ? 'search-tab-active' : ''}`}
-          onClick={() => setActiveTab('posts')}
+          className={`search-tab ${activeTab === "posts" ? "search-tab-active" : ""}`}
+          onClick={() => setActiveTab("posts")}
         >
           Posts ({posts.length})
         </button>
@@ -82,11 +84,14 @@ const Search = () => {
       <div className="search-results">
         {loading ? (
           <div className="loading-container">
-            <div className="spinner" style={{ width: '40px', height: '40px' }}></div>
+            <div
+              className="spinner"
+              style={{ width: "40px", height: "40px" }}
+            ></div>
           </div>
         ) : (
           <>
-            {activeTab === 'users' && (
+            {activeTab === "users" && (
               <div className="users-grid">
                 {users.length === 0 ? (
                   <div className="empty-state">No users found</div>
@@ -96,7 +101,7 @@ const Search = () => {
               </div>
             )}
 
-            {activeTab === 'posts' && (
+            {activeTab === "posts" && (
               <div className="posts-feed">
                 {posts.length === 0 ? (
                   <div className="empty-state">No posts found</div>

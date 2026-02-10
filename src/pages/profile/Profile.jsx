@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
-import { FaGithub, FaLinkedin, FaGlobe, FaMapMarkerAlt, FaCog } from 'react-icons/fa';
-import { userAPI, postAPI } from '../../utils/api';
-import { selectCurrentUser } from '../../redux/slices/authSlice';
-import PostCard from '../../components/posts/PostCard';
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaGlobe,
+  FaMapMarkerAlt,
+  FaCog,
+} from "react-icons/fa";
+import { userAPI, postAPI } from "../../utils/api";
+import { selectCurrentUser } from "../../redux/slices/authSlice";
+import PostCard from "../../components/posts/PostCard";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -29,7 +35,7 @@ const Profile = () => {
       setUser(data);
       setFollowing(data.followers?.includes(currentUser?._id));
     } catch (error) {
-      toast.error('Failed to load profile');
+      toast.error("Failed to load profile");
     } finally {
       setLoading(false);
     }
@@ -50,14 +56,17 @@ const Profile = () => {
       if (following) {
         await userAPI.unfollow(userId);
         setFollowing(false);
-        setUser({ ...user, followers: user.followers.filter(id => id !== currentUser._id) });
+        setUser({
+          ...user,
+          followers: user.followers.filter((id) => id !== currentUser._id),
+        });
       } else {
         await userAPI.follow(userId);
         setFollowing(true);
         setUser({ ...user, followers: [...user.followers, currentUser._id] });
       }
     } catch (error) {
-      toast.error('Failed to update follow status');
+      toast.error("Failed to update follow status");
     } finally {
       setFollowLoading(false);
     }
@@ -80,17 +89,21 @@ const Profile = () => {
 
         {/* Profile Info */}
         <div className="flex flex-col sm:flex-row gap-6 mt-[-60px] relative z-10 px-6">
-          <img 
-            src={user?.profilePicture} 
-            alt={user?.name} 
+          <img
+            src={user?.profilePicture}
+            alt={user?.name}
             className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
           />
-          
+
           <div className="flex-1 pt-16 sm:pt-0">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">{user?.name}</h1>
-                <p className="text-gray-600 mt-1">{user?.bio || 'No bio yet'}</p>
+                <h1 className="text-2xl font-bold text-gray-900">
+                  {user?.name}
+                </h1>
+                <p className="text-gray-600 mt-1">
+                  {user?.bio || "No bio yet"}
+                </p>
                 {user?.location && (
                   <div className="flex items-center gap-2 text-gray-600 mt-2">
                     <FaMapMarkerAlt className="text-sm" />
@@ -105,12 +118,16 @@ const Profile = () => {
                   Edit Profile
                 </Link>
               ) : (
-                <button 
-                  className={`btn ${following ? 'btn-secondary' : 'btn-primary'}`}
+                <button
+                  className={`btn ${following ? "btn-secondary" : "btn-primary"}`}
                   onClick={handleFollow}
                   disabled={followLoading}
                 >
-                  {followLoading ? 'Loading...' : following ? 'Unfollow' : 'Follow'}
+                  {followLoading
+                    ? "Loading..."
+                    : following
+                      ? "Unfollow"
+                      : "Follow"}
                 </button>
               )}
             </div>
@@ -118,15 +135,21 @@ const Profile = () => {
             {/* Stats */}
             <div className="flex gap-6 mb-4 text-sm">
               <div>
-                <span className="font-semibold text-gray-900">{posts.length}</span>
+                <span className="font-semibold text-gray-900">
+                  {posts.length}
+                </span>
                 <span className="text-gray-600 ml-1">Posts</span>
               </div>
               <div>
-                <span className="font-semibold text-gray-900">{user?.followers?.length || 0}</span>
+                <span className="font-semibold text-gray-900">
+                  {user?.followers?.length || 0}
+                </span>
                 <span className="text-gray-600 ml-1">Followers</span>
               </div>
               <div>
-                <span className="font-semibold text-gray-900">{user?.following?.length || 0}</span>
+                <span className="font-semibold text-gray-900">
+                  {user?.following?.length || 0}
+                </span>
                 <span className="text-gray-600 ml-1">Following</span>
               </div>
             </div>
@@ -135,9 +158,9 @@ const Profile = () => {
             {(user?.githubUrl || user?.linkedinUrl || user?.websiteUrl) && (
               <div className="flex gap-4">
                 {user?.githubUrl && (
-                  <a 
-                    href={user.githubUrl} 
-                    target="_blank" 
+                  <a
+                    href={user.githubUrl}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 hover:text-gray-900 transition-colors"
                   >
@@ -145,9 +168,9 @@ const Profile = () => {
                   </a>
                 )}
                 {user?.linkedinUrl && (
-                  <a 
-                    href={user.linkedinUrl} 
-                    target="_blank" 
+                  <a
+                    href={user.linkedinUrl}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 hover:text-blue-600 transition-colors"
                   >
@@ -155,9 +178,9 @@ const Profile = () => {
                   </a>
                 )}
                 {user?.websiteUrl && (
-                  <a 
-                    href={user.websiteUrl} 
-                    target="_blank" 
+                  <a
+                    href={user.websiteUrl}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 hover:text-gray-900 transition-colors"
                   >
@@ -174,7 +197,9 @@ const Profile = () => {
           <div className="mt-6 pt-6 border-t border-gray-200">
             <div className="flex flex-wrap gap-2">
               {user.skills.map((skill, idx) => (
-                <span key={idx} className="badge badge-primary">{skill}</span>
+                <span key={idx} className="badge badge-primary">
+                  {skill}
+                </span>
               ))}
             </div>
           </div>
@@ -190,7 +215,7 @@ const Profile = () => {
           </div>
         ) : (
           <div className="space-y-6">
-            {posts.map(post => (
+            {posts.map((post) => (
               <PostCard key={post._id} post={post} />
             ))}
           </div>

@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
-import ConversationsList from './ConversationsList.jsx';
-import ChatWindow from './ChatWindow.jsx';
-import { messageAPI } from '../../utils/api.js';
-import { setConversations, setLoading } from '../../redux/slices/chatSlice.js';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import ConversationsList from "./ConversationsList.jsx";
+import ChatWindow from "./ChatWindow.jsx";
+import { messageAPI } from "../../utils/api.js";
+import { setConversations, setLoading } from "../../redux/slices/chatSlice.js";
 
 const Chat = () => {
   const dispatch = useDispatch();
-  const { conversations, activeConversation, loading } = useSelector((state) => state.chat);
+  const { conversations, activeConversation, loading } = useSelector(
+    (state) => state.chat,
+  );
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -18,8 +20,8 @@ const Chat = () => {
       setIsMobileView(window.innerWidth < 768);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const fetchConversations = async () => {
@@ -28,7 +30,7 @@ const Chat = () => {
       const { data } = await messageAPI.getConversations();
       dispatch(setConversations(data));
     } catch (error) {
-      toast.error('Failed to load conversations');
+      toast.error("Failed to load conversations");
     }
   };
 
@@ -36,7 +38,10 @@ const Chat = () => {
     return (
       <div className="chat-container">
         <div className="loading-container">
-          <div className="spinner" style={{ width: '40px', height: '40px' }}></div>
+          <div
+            className="spinner"
+            style={{ width: "40px", height: "40px" }}
+          ></div>
         </div>
       </div>
     );
@@ -45,13 +50,9 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <div className="chat-layout">
-        {(!isMobileView || !activeConversation) && (
-          <ConversationsList />
-        )}
-        
-        {(!isMobileView || activeConversation) && (
-          <ChatWindow />
-        )}
+        {(!isMobileView || !activeConversation) && <ConversationsList />}
+
+        {(!isMobileView || activeConversation) && <ChatWindow />}
       </div>
     </div>
   );
