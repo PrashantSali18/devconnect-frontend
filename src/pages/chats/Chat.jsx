@@ -35,27 +35,34 @@ const Chat = () => {
   };
 
   if (loading && conversations.length === 0) {
-    return (
-      <div className="chat-container">
-        <div className="loading-container">
-          <div
-            className="spinner"
-            style={{ width: "40px", height: "40px" }}
-          ></div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="chat-container">
-      <div className="chat-layout">
-        {(!isMobileView || !activeConversation) && <ConversationsList />}
-
-        {(!isMobileView || activeConversation) && <ChatWindow />}
-      </div>
+return (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
     </div>
-  );
+  </div>
+);
+}
+
+return (
+  <div className="min-h-screen bg-gray-50 pt-16">
+    <div className="max-w-7xl mx-auto flex h-[calc(100vh-4rem)] bg-white shadow-sm rounded-xl overflow-hidden">
+      {/* Conversations List */}
+      {(!isMobileView || !activeConversation) && (
+        <div className="w-full md:w-80 border-r border-gray-200">
+          <ConversationsList />
+        </div>
+      )}
+
+      {/* Chat Window */}
+      {(!isMobileView || activeConversation) && (
+        <div className="flex-1">
+          <ChatWindow />
+        </div>
+      )}
+    </div>
+  </div>
+);
 };
 
 export default Chat;

@@ -62,28 +62,32 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <div className="card">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <Link to={`/profile/${post.user?._id}`} className="flex items-center gap-3">
-          <img 
-            src={post.user?.profilePicture || 'https://via.placeholder.com/40'} 
+        <Link
+          to={`/profile/${post.user?._id}`}
+          className="flex items-center gap-3"
+        >
+          <img
+            src={"/avatar.png"}
             alt={post.user?.name}
-            className="avatar"
+            className="w-11 h-11 rounded-full object-cover border"
           />
           <div>
             <div className="font-semibold text-gray-900">{post.user?.name}</div>
             <div className="text-xs text-gray-500">
-              {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+              {formatDistanceToNow(new Date(post.createdAt), {
+                addSuffix: true,
+              })}
             </div>
           </div>
         </Link>
 
         {isOwner && (
-          <button 
-            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+          <button
             onClick={handleDelete}
-            title="Delete post"
+            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition"
           >
             <FaTrash />
           </button>
@@ -92,29 +96,36 @@ const PostCard = ({ post }) => {
 
       {/* Content */}
       <div className="mb-4">
-        <p className="text-gray-900 whitespace-pre-wrap mb-4">{post.content}</p>
+        <p className="text-gray-800 whitespace-pre-wrap mb-4">{post.content}</p>
 
         {post.image && (
-          <div className="rounded-lg overflow-hidden mb-4">
-            <img src={post.image} alt="Post" className="w-full max-h-[500px] object-cover" />
+          <div className="rounded-xl overflow-hidden mb-4">
+            <img
+              src={post.image}
+              alt="Post"
+              className="w-full max-h-[500px] object-cover"
+            />
           </div>
         )}
 
         {post.codeSnippet?.code && (
-          <div className="border border-gray-200 rounded-lg overflow-hidden mb-4">
-            <div className="bg-gray-800 text-white px-4 py-2 text-xs font-medium uppercase">
+          <div className="rounded-xl overflow-hidden mb-4 border border-gray-200">
+            <div className="bg-gray-800 text-white px-4 py-2 text-xs uppercase font-semibold">
               {post.codeSnippet.language}
             </div>
-            <pre className="p-4 bg-gray-900 overflow-x-auto">
-              <code className="text-gray-100 font-mono text-sm">{post.codeSnippet.code}</code>
+            <pre className="p-4 bg-gray-900 overflow-x-auto text-sm text-gray-100 font-mono">
+              <code>{post.codeSnippet.code}</code>
             </pre>
           </div>
         )}
 
-        {post.tags && post.tags.length > 0 && (
+        {post.tags?.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag, index) => (
-              <span key={index} className="badge badge-primary">
+              <span
+                key={index}
+                className="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-full"
+              >
                 #{tag}
               </span>
             ))}
@@ -123,30 +134,31 @@ const PostCard = ({ post }) => {
       </div>
 
       {/* Stats */}
-      <div className="flex gap-4 pb-3 mb-3 border-b border-gray-200 text-sm text-gray-600">
+      <div className="flex gap-4 pb-3 mb-3 border-b text-sm text-gray-600">
         <span>{post.likes?.length || 0} likes</span>
         <span>{post.comments?.length || 0} comments</span>
       </div>
 
       {/* Actions */}
-      <div className="flex gap-2 pb-3 mb-3 border-b border-gray-200">
-        <button 
-          className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-            isLiked 
-              ? 'text-red-500 hover:bg-red-50' 
-              : 'text-gray-600 hover:bg-gray-100'
-          }`}
+      <div className="flex gap-2 pb-3 mb-3 border-b">
+        <button
           onClick={handleLike}
+          className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition ${
+            isLiked
+              ? "text-red-500 hover:bg-red-50"
+              : "text-gray-600 hover:bg-gray-100"
+          }`}
         >
           {isLiked ? <FaHeart /> : <FaRegHeart />}
-          <span>Like</span>
+          Like
         </button>
-        <button 
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors"
+
+        <button
           onClick={() => setShowComments(!showComments)}
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition"
         >
           <FaComment />
-          <span>Comment</span>
+          Comment
         </button>
       </div>
 
@@ -154,42 +166,49 @@ const PostCard = ({ post }) => {
       {showComments && (
         <div className="space-y-4">
           <form onSubmit={handleComment} className="flex gap-3 items-center">
-            <img 
-              src={currentUser?.profilePicture || 'https://via.placeholder.com/40'} 
+            <img
+              src={currentUser?.profilePicture || "/avatar.png"}
               alt={currentUser?.name}
-              className="avatar-sm"
+              className="w-9 h-9 rounded-full object-cover border"
             />
+
             <input
               type="text"
               placeholder="Write a comment..."
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              className="input flex-1"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <button 
-              type="submit" 
-              className="btn btn-primary btn-sm"
+
+            <button
+              type="submit"
               disabled={!commentText.trim() || submitting}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {submitting ? 'Posting...' : 'Post'}
+              {submitting ? "Posting..." : "Post"}
             </button>
           </form>
 
           <div className="space-y-4">
             {post.comments?.map((comment) => (
               <div key={comment._id} className="flex gap-3">
-                <img 
-                  src={comment.user?.profilePicture || 'https://via.placeholder.com/40'} 
+                <img
+                  src={comment.user?.profilePicture || "/avatar.png"}
                   alt={comment.user?.name}
-                  className="avatar-sm"
+                  className="w-9 h-9 rounded-full object-cover border"
                 />
-                <div className="flex-1 bg-gray-50 rounded-lg p-3">
+
+                <div className="flex-1 bg-gray-50 rounded-xl p-3">
                   <div className="font-semibold text-sm text-gray-900 mb-1">
                     {comment.user?.name}
                   </div>
-                  <div className="text-sm text-gray-900 mb-1">{comment.text}</div>
+                  <div className="text-sm text-gray-800 mb-1">
+                    {comment.text}
+                  </div>
                   <div className="text-xs text-gray-500">
-                    {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                    {formatDistanceToNow(new Date(comment.createdAt), {
+                      addSuffix: true,
+                    })}
                   </div>
                 </div>
               </div>

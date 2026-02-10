@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { FaArrowLeft } from 'react-icons/fa';
-import { authAPI } from '../../utils/api';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { FaArrowLeft } from "react-icons/fa";
+import { authAPI } from "../../utils/api";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -13,7 +13,7 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     if (!email) {
-      toast.error('Please enter your email');
+      toast.error("Please enter your email");
       return;
     }
 
@@ -23,7 +23,9 @@ const ForgotPassword = () => {
       toast.success(data.message);
       setSuccess(true);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to send reset email');
+      toast.error(
+        error.response?.data?.message || "Failed to send reset email",
+      );
     } finally {
       setLoading(false);
     }
@@ -31,58 +33,80 @@ const ForgotPassword = () => {
 
   if (success) {
     return (
-      <div className="auth-container">
-        <div className="auth-card">
-          <div className="auth-header">
-            <h1>Check Your Email</h1>
-            <p>We've sent password reset instructions to {email}</p>
-          </div>
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <Link to="/login" className="btn btn-primary">
-              Back to Login
-            </Link>
-          </div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-gray-200 p-8 text-center">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+            Check Your Email
+          </h1>
+
+          <p className="text-gray-600 mb-6">
+            We've sent password reset instructions to{" "}
+            <span className="font-medium text-gray-900">{email}</span>
+          </p>
+
+          <Link
+            to="/login"
+            className="inline-block w-full py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+          >
+            Back to Login
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1>Forgot Password?</h1>
-          <p>Enter your email and we'll send you reset instructions</p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+        {/* Header */}
+        <div className="mb-6 text-center">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+            Forgot Password?
+          </h1>
+          <p className="text-gray-600 text-sm">
+            Enter your email and we'll send you reset instructions
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Email
+            </label>
+
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="input"
               placeholder="Enter your email"
               required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-            {loading ? (
-              <>
-                <span className="spinner"></span>
-                Sending...
-              </>
-            ) : (
-              'Send Reset Link'
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {loading && (
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
             )}
+            {loading ? "Sending..." : "Send Reset Link"}
           </button>
         </form>
 
-        <div className="auth-switch" style={{ marginTop: '1.5rem' }}>
-          <Link to="/login" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+        {/* Back Link */}
+        <div className="mt-6 text-center">
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition"
+          >
             <FaArrowLeft size={14} />
             Back to Login
           </Link>

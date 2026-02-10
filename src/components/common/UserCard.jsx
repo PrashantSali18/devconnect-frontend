@@ -31,40 +31,57 @@ const UserCard = ({ user }) => {
   };
 
   return (
-    <div className="card hover:shadow-md transition-shadow">
+    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
       <Link to={`/profile/${user._id}`} className="block">
         <div className="flex flex-col items-center text-center">
           <img
-            src={user.profilePicture || 'https://via.placeholder.com/150'}
+            src={user.profilePicture || "/avatar.png"}
             alt={user.name}
-            className="avatar-xl mb-3"
+            className="w-24 h-24 rounded-full object-cover border mb-4"
           />
-          <h3 className="font-semibold text-base mb-1">{user.name}</h3>
+
+          <h3 className="font-semibold text-base text-gray-900 mb-1">
+            {user.name}
+          </h3>
+
           {user.bio && (
-            <p className="text-sm text-gray-600 mb-3 line-clamp-2">{user.bio}</p>
+            <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+              {user.bio}
+            </p>
           )}
+
           {user.skills?.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-4 justify-center">
+            <div className="flex flex-wrap gap-2 mb-4 justify-center">
               {user.skills.slice(0, 3).map((skill, idx) => (
-                <span key={idx} className="badge badge-primary text-xs">
+                <span
+                  key={idx}
+                  className="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-full"
+                >
                   {skill}
                 </span>
               ))}
+
               {user.skills.length > 3 && (
-                <span className="badge text-xs">+{user.skills.length - 3}</span>
+                <span className="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
+                  +{user.skills.length - 3}
+                </span>
               )}
             </div>
           )}
         </div>
       </Link>
-      
+
       {!isOwnProfile && (
         <button
           onClick={handleFollow}
           disabled={loading}
-          className={`w-full ${following ? 'btn-secondary' : 'btn-primary'} btn`}
+          className={`w-full py-2 rounded-lg font-medium transition ${
+            following
+              ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
-          {loading ? 'Loading...' : following ? 'Unfollow' : 'Follow'}
+          {loading ? "Loading..." : following ? "Unfollow" : "Follow"}
         </button>
       )}
     </div>

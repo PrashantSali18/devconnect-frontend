@@ -79,155 +79,165 @@ const EditProfile = () => {
     }
   };
 
-  return (
-    <div className="max-w-2xl mx-auto">
-      <div className="card">
-        <h1 className="text-2xl font-bold mb-6">Edit Profile</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Profile Picture */}
-          <div className="flex flex-col items-center gap-4">
-            <div className="relative">
-              <img
-                src={preview || "https://via.placeholder.com/150"}
-                alt="Preview"
-                className="w-32 h-32 rounded-full object-cover"
+return (
+  <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="bg-white shadow-md rounded-xl p-6 border border-gray-200">
+      <h1 className="text-2xl font-bold mb-6">Edit Profile</h1>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Profile Picture */}
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative">
+            <img
+              src={preview || "/avatar.png"}
+              alt="Preview"
+              className="w-32 h-32 rounded-full object-cover border"
+            />
+
+            <label className="absolute bottom-0 right-0 w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-indigo-700 transition">
+              <FaCamera size={14} />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
               />
-              <label className="absolute bottom-0 right-0 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-colors">
-                <FaCamera />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
-            </div>
-            <p className="text-sm text-gray-600">
-              Click camera icon to change photo
-            </p>
-          </div>
-
-          {/* Form Fields */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Name
             </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="input"
-              required
-            />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Bio
-            </label>
-            <textarea
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-              className="input"
-              rows="4"
-              placeholder="Tell us about yourself..."
-            />
-          </div>
+          <p className="text-sm text-gray-600">
+            Click camera icon to change photo
+          </p>
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Skills (comma-separated)
-            </label>
-            <input
-              type="text"
-              name="skills"
-              value={formData.skills}
-              onChange={handleChange}
-              className="input"
-              placeholder="React, Node.js, MongoDB"
-            />
-          </div>
+        {/* Name */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Location
-            </label>
-            <input
-              type="text"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              className="input"
-              placeholder="City, Country"
-            />
-          </div>
+        {/* Bio */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            Bio
+          </label>
+          <textarea
+            name="bio"
+            value={formData.bio}
+            onChange={handleChange}
+            rows="4"
+            placeholder="Tell us about yourself..."
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              GitHub URL
-            </label>
-            <input
-              type="url"
-              name="githubUrl"
-              value={formData.githubUrl}
-              onChange={handleChange}
-              className="input"
-              placeholder="https://github.com/username"
-            />
-          </div>
+        {/* Skills */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            Skills (comma-separated)
+          </label>
+          <input
+            type="text"
+            name="skills"
+            value={formData.skills}
+            onChange={handleChange}
+            placeholder="React, Node.js, MongoDB"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              LinkedIn URL
-            </label>
-            <input
-              type="url"
-              name="linkedinUrl"
-              value={formData.linkedinUrl}
-              onChange={handleChange}
-              className="input"
-              placeholder="https://linkedin.com/in/username"
-            />
-          </div>
+        {/* Location */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            Location
+          </label>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            placeholder="City, Country"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Website URL
-            </label>
-            <input
-              type="url"
-              name="websiteUrl"
-              value={formData.websiteUrl}
-              onChange={handleChange}
-              className="input"
-              placeholder="https://yourwebsite.com"
-            />
-          </div>
+        {/* GitHub */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            GitHub URL
+          </label>
+          <input
+            type="url"
+            name="githubUrl"
+            value={formData.githubUrl}
+            onChange={handleChange}
+            placeholder="https://github.com/username"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
 
-          {/* Actions */}
-          <div className="flex gap-4 pt-4">
-            <button
-              type="button"
-              className="btn btn-secondary flex-1"
-              onClick={() => navigate(`/profile/${user._id}`)}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="btn btn-primary flex-1"
-              disabled={loading}
-            >
-              {loading ? "Saving..." : "Save Changes"}
-            </button>
-          </div>
-        </form>
-      </div>
+        {/* LinkedIn */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            LinkedIn URL
+          </label>
+          <input
+            type="url"
+            name="linkedinUrl"
+            value={formData.linkedinUrl}
+            onChange={handleChange}
+            placeholder="https://linkedin.com/in/username"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
+
+        {/* Website */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            Website URL
+          </label>
+          <input
+            type="url"
+            name="websiteUrl"
+            value={formData.websiteUrl}
+            onChange={handleChange}
+            placeholder="https://yourwebsite.com"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-4 pt-4">
+          <button
+            type="button"
+            onClick={() => navigate(`/profile/${user._id}`)}
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-100 transition"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50 transition"
+          >
+            {loading ? "Saving..." : "Save Changes"}
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default EditProfile;

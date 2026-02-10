@@ -46,47 +46,44 @@ const Explore = () => {
 
   if (loading && posts.length === 0) {
     return (
-      <div className="home-container">
-        <div className="loading-container">
-          <div
-            className="spinner"
-            style={{ width: "40px", height: "40px" }}
-          ></div>
-        </div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="home-container">
-      <div className="page-header">
-        <h1>Explore</h1>
-        <p>Discover posts from the DevConnect community</p>
-      </div>
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Explore</h1>
+          <p className="text-gray-600">
+            Discover posts from the DevConnect community
+          </p>
+        </div>
 
-      <div className="posts-feed">
+        {/* Feed */}
         {posts.length === 0 ? (
-          <div className="empty-state">
-            <p>No posts found</p>
-          </div>
+          <div className="text-center py-16 text-gray-500">No posts found</div>
         ) : (
-          <>
+          <div className="space-y-6">
             {posts.map((post) => (
               <PostCard key={post._id} post={post} />
             ))}
 
             {hasMore && (
-              <div className="load-more-container">
+              <div className="flex justify-center pt-4">
                 <button
-                  className="btn btn-outline"
                   onClick={loadMore}
                   disabled={loadingMore}
+                  className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loadingMore ? "Loading..." : "Load More"}
                 </button>
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>

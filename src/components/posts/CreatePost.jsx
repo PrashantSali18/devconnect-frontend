@@ -70,107 +70,119 @@ const CreatePost = ({ onPostCreated }) => {
     }
   };
 
-  return (
-    <div className="card mb-6">
-      <div className="flex gap-4 mb-4">
-        <img 
-          src={user?.profilePicture || 'https://via.placeholder.com/40'} 
-          alt={user?.name}
-          className="avatar"
+return (
+  <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-6">
+    {/* Top Section */}
+    <div className="flex gap-4 mb-4">
+      <img
+        src={user?.profilePicture || "/avatar.png"}
+        alt={user?.name}
+        className="w-12 h-12 rounded-full object-cover border border-gray-200"
+      />
+
+      <textarea
+        placeholder="What's on your mind?"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        rows="3"
+        className="flex-1 resize-none bg-transparent focus:outline-none text-gray-800 placeholder-gray-400 text-sm"
+      />
+    </div>
+
+    {/* Image Preview */}
+    {imagePreview && (
+      <div className="relative mb-4 rounded-xl overflow-hidden">
+        <img
+          src={imagePreview}
+          alt="Preview"
+          className="w-full max-h-96 object-cover"
         />
-        <textarea
-          placeholder="What's on your mind?"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className="flex-1 resize-none border-0 focus:ring-0 focus:outline-none text-gray-900 placeholder:text-gray-400"
-          rows="3"
-        />
-      </div>
-
-      {imagePreview && (
-        <div className="relative mb-4 rounded-lg overflow-hidden">
-          <img src={imagePreview} alt="Preview" className="w-full max-h-96 object-cover" />
-          <button 
-            type="button"
-            className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors"
-            onClick={removeImage}
-          >
-            <FaTimes />
-          </button>
-        </div>
-      )}
-
-      {showCodeInput && (
-        <div className="mb-4 border border-gray-200 rounded-lg overflow-hidden">
-          <div className="flex gap-2 p-2 bg-gray-50 border-b border-gray-200">
-            <select 
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              className="input flex-1"
-            >
-              <option value="javascript">JavaScript</option>
-              <option value="python">Python</option>
-              <option value="java">Java</option>
-              <option value="cpp">C++</option>
-              <option value="html">HTML</option>
-              <option value="css">CSS</option>
-              <option value="typescript">TypeScript</option>
-              <option value="go">Go</option>
-              <option value="rust">Rust</option>
-            </select>
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              onClick={() => {
-                setShowCodeInput(false);
-                setCode('');
-              }}
-            >
-              Remove
-            </button>
-          </div>
-          <textarea
-            placeholder="Paste your code here..."
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className="w-full p-4 font-mono text-sm bg-gray-50 border-0 resize-none focus:ring-0 focus:outline-none"
-            rows="8"
-          />
-        </div>
-      )}
-
-      <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-        <div className="flex gap-2">
-          <label className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
-            <FaImage className="text-green-500" />
-            <span>Photo</span>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-            />
-          </label>
-          <button
-            type="button"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-            onClick={() => setShowCodeInput(!showCodeInput)}
-          >
-            <FaCode className="text-blue-500" />
-            <span>Code</span>
-          </button>
-        </div>
-
-        <button 
-          className="btn btn-primary"
-          onClick={handleSubmit}
-          disabled={loading || (!content.trim() && !image)}
+        <button
+          type="button"
+          onClick={removeImage}
+          className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-black/60 hover:bg-black/80 text-white rounded-full transition"
         >
-          {loading ? 'Posting...' : 'Post'}
+          <FaTimes />
         </button>
       </div>
+    )}
+
+    {/* Code Section */}
+    {showCodeInput && (
+      <div className="mb-4 border border-gray-200 rounded-xl overflow-hidden">
+        <div className="flex gap-3 p-3 bg-gray-50 border-b border-gray-200">
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          >
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="typescript">TypeScript</option>
+            <option value="go">Go</option>
+            <option value="rust">Rust</option>
+          </select>
+
+          <button
+            type="button"
+            onClick={() => {
+              setShowCodeInput(false);
+              setCode("");
+            }}
+            className="text-sm px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition"
+          >
+            Remove
+          </button>
+        </div>
+
+        <textarea
+          placeholder="Paste your code here..."
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          rows="8"
+          className="w-full p-4 font-mono text-sm bg-gray-50 resize-none focus:outline-none"
+        />
+      </div>
+    )}
+
+    {/* Bottom Controls */}
+    <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+      <div className="flex gap-3">
+        <label className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer transition">
+          <FaImage className="text-green-500" />
+          <span>Photo</span>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+        </label>
+
+        <button
+          type="button"
+          onClick={() => setShowCodeInput(!showCodeInput)}
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition"
+        >
+          <FaCode className="text-blue-500" />
+          <span>Code</span>
+        </button>
+      </div>
+
+      <button
+        onClick={handleSubmit}
+        disabled={loading || (!content.trim() && !image)}
+        className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition"
+      >
+        {loading ? "Posting..." : "Post"}
+      </button>
     </div>
-  );
+  </div>
+);
 };
 
 export default CreatePost;
