@@ -162,11 +162,11 @@ const Profile = () => {
         {/* Profile Info */}
         <div className="flex flex-col sm:flex-row gap-6 px-6 pb-6 relative -mt-16">
           <img
-            src={user?.profilePicture || "/default-avatar.png"}
+            src={user?.profilePicture || "/avatar.png"}
             alt={user?.name}
             className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover bg-white"
             onError={(e) => {
-              e.target.src = "/default-avatar.png";
+              e.target.src = user.profilePicture || "/avatar.png";
             }}
           />
 

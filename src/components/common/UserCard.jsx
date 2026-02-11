@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
-import { userAPI } from '../../utils/api';
-import { selectCurrentUser } from '../../redux/slices/authSlice';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { userAPI } from "../../utils/api";
+import { selectCurrentUser } from "../../redux/slices/authSlice";
 
 const UserCard = ({ user }) => {
   const currentUser = useSelector(selectCurrentUser);
-  const [following, setFollowing] = useState(user.followers?.includes(currentUser?._id));
+  const [following, setFollowing] = useState(
+    user.followers?.includes(currentUser?._id),
+  );
   const [loading, setLoading] = useState(false);
 
   const isOwnProfile = currentUser?._id === user._id;
@@ -24,7 +26,7 @@ const UserCard = ({ user }) => {
         setFollowing(true);
       }
     } catch (error) {
-      toast.error('Failed to update follow status');
+      toast.error("Failed to update follow status");
     } finally {
       setLoading(false);
     }

@@ -70,7 +70,7 @@ const PostCard = ({ post }) => {
           className="flex items-center gap-3"
         >
           <img
-            src={"/avatar.png"}
+            src={post.user?.profilePicture || "/avatar.png"}
             alt={post.user?.name}
             className="w-11 h-11 rounded-full object-cover border"
           />

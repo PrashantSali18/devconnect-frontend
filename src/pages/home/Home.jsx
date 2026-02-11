@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import CreatePost from "../../components/posts/CreatePost";
@@ -9,6 +10,7 @@ import { FiMessageCircle } from "react-icons/fi";
 import { FaSpinner } from "react-icons/fa";
 
 const Home = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { feed, loading, hasMore, page } = useSelector((state) => state.posts);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -80,7 +82,7 @@ const Home = () => {
             </p>
 
             <button
-              onClick={() => (window.location.href = "/explore")}
+              onClick={() => (navigate("/explore"), fetchFeed())}
               className="inline-flex items-center px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition"
             >
               Explore Users

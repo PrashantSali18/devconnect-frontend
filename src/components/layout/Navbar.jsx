@@ -90,9 +90,9 @@ const Navbar = () => {
                 className="flex items-center gap-2 hover:opacity-80 transition-opacity"
               >
                 <img
-                  src={"/avatar.png"}
+                  src={user?.profilePicture || "/avatar.png"}
                   alt={user?.name}
-                  className = "h-10 w-10 rounded-full"
+                  className="h-10 w-10 rounded-full"
                 />
               </button>
 
@@ -105,9 +105,9 @@ const Navbar = () => {
                   <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
                     <div className="p-4 flex items-center gap-3 border-b border-gray-200">
                       <img
-                        src={user?.profilePicture}
+                        src={user?.profilePicture || "/avatar.png"}
                         alt={user?.name}
-                        className="avatar"
+                        className="h-10 w-10 rounded-full"
                       />
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-sm truncate">
