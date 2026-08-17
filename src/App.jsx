@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Analytics } from "@vercel/analytics/react";
 import { authAPI } from "./utils/api.js";
 import {
   setUser,
@@ -56,44 +57,47 @@ function App() {
   }, [token, isAuthenticated, dispatch]);
 
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route
-        path="/login"
-        element={!isAuthenticated ? <Login /> : <Navigate to="/" />}
-      />
-      <Route
-        path="/register"
-        element={!isAuthenticated ? <Register /> : <Navigate to="/" />}
-      />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password/:token" element={<ResetPassword />} />
-      <Route path="/verify-email/:token" element={<VerifyEmail />} />
-      <Route path="/oauth/success" element={<OAuthSuccess />} />
+    <>
+      <Routes>
+        {/* Public Routes */}
+        <Route
+          path="/login"
+          element={!isAuthenticated ? <Login /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/register"
+          element={!isAuthenticated ? <Register /> : <Navigate to="/" />}
+        />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/verify-email/:token" element={<VerifyEmail />} />
+        <Route path="/oauth/success" element={<OAuthSuccess />} />
 
-      {/* Protected Routes */}
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <Layout />
-          </PrivateRoute>
-        }
-      >
-        <Route index element={<Home />} />
-        <Route path="explore" element={<Explore />} />
-        <Route path="chat" element={<Chat />} />
-        <Route path="search" element={<Search />} />
-        <Route path="notifications" element={<Notifications />} />
-        <Route path="posts/:postId" element={<PostDetail />} />
-        <Route path="profile/:userId" element={<Profile />} />
-        <Route path="profile/edit" element={<EditProfile />} />
-        <Route path="settings" element={<Settings />} />
-      </Route>
+        {/* Protected Routes */}
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Layout />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<Home />} />
+          <Route path="explore" element={<Explore />} />
+          <Route path="chat" element={<Chat />} />
+          <Route path="search" element={<Search />} />
+          <Route path="notifications" element={<Notifications />} />
+          <Route path="posts/:postId" element={<PostDetail />} />
+          <Route path="profile/:userId" element={<Profile />} />
+          <Route path="profile/edit" element={<EditProfile />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
 
-      {/* 404 */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Analytics />
+    </>
   );
 }
 
